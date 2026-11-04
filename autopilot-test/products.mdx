@@ -23,7 +23,7 @@ curl 'http://127.0.0.1:8000/products'
 | --- | --- | --- | --- |
 | status | string | `active`（在售）、`draft`（草稿）或 `archived`（归档）。只返回该状态的商品。 | 返回所有状态的商品 |
 | sort | string | `price_asc`（按 `price_cents` 从低到高）、`price_desc`（按 `price_cents` 从高到低）或 `name_asc`（按 `name` 升序，按字符编码顺序比较，不是拼音顺序）。 | 保持默认顺序 |
-| limit | integer | 1 到 100 的整数，表示最多返回的商品数量。 | 返回全部匹配的商品 |
+| limit | integer | 1 到 200 的整数，表示最多返回的商品数量。 | 返回全部匹配的商品 |
 
 接口按以下顺序处理参数：
 
@@ -57,5 +57,5 @@ curl 'http://127.0.0.1:8000/products?status=active&sort=price_desc&limit=3'
   - 传入了 `status`、`sort`、`limit` 以外的参数。
   - `status` 为空、不是 `active`、`draft`、`archived` 之一（包括大小写不符，例如 `ACTIVE`），或传了多次。
   - `sort` 为空、不是 `price_asc`、`price_desc` 或 `name_asc` 之一，或传了多次。
-  - `limit` 为空、不是整数（例如 `1.5`、`-1` 或 `abc`）、小于 1 或大于 100，或传了多次。
+  - `limit` 为空、不是整数（例如 `1.5`、`-1` 或 `abc`）、小于 1 或大于 200，或传了多次。
 - `404`：请求了不存在的路径，返回 `not_found`。
