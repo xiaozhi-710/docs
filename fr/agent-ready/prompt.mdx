@@ -1,0 +1,75 @@
+---
+title: 'Composant Prompt'
+description: 'Intégrez des invites IA partageables que les lecteurs peuvent copier ou ouvrir dans Cursor'
+icon: 'robot'
+---
+
+Le composant `Prompt` affiche une invite IA prédéfinie avec des actions en un clic pour la copier dans le presse-papiers ou l'ouvrir directement dans Cursor. Il est idéal pour toute page de documentation où vous souhaitez fournir aux lecteurs une invite prête à l'emploi.
+
+## Utilisation de base
+
+<Prompt description="Summarize this API endpoint">
+You are a technical writer. Given the following API endpoint documentation, write a one-paragraph summary that explains what the endpoint does, what inputs it requires, and what it returns. Be concise and use plain language.
+</Prompt>
+
+```mdx
+<Prompt description="Summarize this API endpoint">
+You are a technical writer. Given the following API endpoint documentation,
+write a one-paragraph summary that explains what the endpoint does, what
+inputs it requires, and what it returns. Be concise and use plain language.
+</Prompt>
+```
+
+## Avec intégration Cursor
+
+Ajoutez `actions={["copy", "cursor"]}` pour également afficher un bouton « Open in Cursor ». Ceci est particulièrement utile pour les invites que les lecteurs utiliseront dans leur éditeur.
+
+<Prompt
+  description="Generate a typed API client"
+  icon="code"
+  actions={["copy", "cursor"]}
+>
+You are an expert TypeScript developer. Given the following OpenAPI specification, generate a fully-typed API client using native fetch. Include:
+- A base client class with configurable baseUrl and auth headers
+- One method per endpoint, with typed request parameters and response types
+- JSDoc comments on each method
+Do not use any third-party HTTP libraries.
+</Prompt>
+
+```mdx
+<Prompt
+  description="Generate a typed API client"
+  icon="code"
+  actions={["copy", "cursor"]}
+>
+You are an expert TypeScript developer. Given the following OpenAPI
+specification, generate a fully-typed API client using native fetch...
+</Prompt>
+```
+
+## Props
+
+<ResponseField name="description" type="string" required>
+  Texte d'en-tête affiché au-dessus du contenu de l'invite. Prend en charge le Markdown.
+</ResponseField>
+
+<ResponseField name="children" type="string" required>
+  Le texte de l'invite qui est copié ou envoyé à Cursor.
+</ResponseField>
+
+<ResponseField name="actions" type="array">
+  Quels boutons d'action afficher. Options : `"copy"`, `"cursor"`. Par défaut `["copy"]`.
+</ResponseField>
+
+<ResponseField name="icon" type="string">
+  Une icône affichée à côté de la description. Prend en charge les noms d'icônes Font Awesome, Lucide et Tabler, les URL d'images ou les SVG en ligne.
+</ResponseField>
+
+## Quand l'utiliser
+
+Le composant `Prompt` fonctionne bien partout où vous apprenez aux lecteurs à travailler avec l'IA :
+
+- **Guides de démarrage rapide** — donnez aux lecteurs une invite pour générer leur première intégration
+- **Pages de référence d'API** — incluez une invite pour générer du code client à partir de la spécification
+- **Guides de dépannage** — intégrez une invite de débogage que les lecteurs peuvent exécuter contre leurs propres journaux d'erreurs
+- **Pages conceptuelles** — ajoutez une invite pour explorer davantage le sujet avec un assistant IA

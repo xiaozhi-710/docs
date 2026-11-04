@@ -1,0 +1,100 @@
+---
+title: "Extraits réutilisables"
+description: "Écrivez une fois, réutilisez partout. Utilisez les extraits pour garder le contenu synchronisé entre les pages"
+icon: "recycle"
+---
+
+Tout contenu que vous vous retrouvez à répéter sur plusieurs pages est un bon candidat pour un extrait. Créez le fichier une seule fois dans le répertoire `snippets/`, importez-le où vous en avez besoin, et les mises à jour se propagent partout automatiquement.
+
+<Note>
+  Les fichiers situés dans `snippets/` ne sont pas rendus comme des pages autonomes. Ils n'apparaissent que là où vous les importez.
+</Note>
+
+## Extraits de contenu
+
+Le modèle le plus simple : rédigez du contenu MDX dans un fichier d'extrait et importez-le comme un composant.
+
+```mdx snippets/prerequisites.mdx
+Before you begin, make sure you have:
+- Node.js 18 or higher
+- An API key from your [dashboard](https://dashboard.example.com)
+```
+
+Importez-le dans n'importe quelle page en utilisant un chemin relatif à la racine :
+
+```mdx your-page.mdx
+---
+title: Install the SDK
+---
+
+import Prerequisites from '/snippets/prerequisites.mdx';
+
+<Prerequisites />
+
+## Installation
+...
+```
+
+Vous pouvez également utiliser des imports relatifs, ce qui permet la navigation par CMD+clic vers l'extrait dans votre éditeur :
+
+```mdx
+import Prerequisites from '../snippets/prerequisites.mdx';
+```
+
+## Extraits de variables
+
+Exportez des constantes nommées depuis un fichier d'extrait pour réutiliser des valeurs comme les noms de produits, les numéros de version ou les URL.
+
+```mdx snippets/vars.mdx
+export const sdkVersion = '3.2.0';
+export const baseUrl = 'https://api.example.com/v1';
+```
+
+Importez-les et utilisez-les en ligne :
+
+```mdx your-page.mdx
+import { sdkVersion, baseUrl } from '/snippets/vars.mdx';
+
+The current SDK version is **{sdkVersion}**.
+
+All requests go to `{baseUrl}`.
+```
+
+## Extraits de composants
+
+Pour les extraits qui doivent varier selon l'endroit où ils sont utilisés, exportez un composant sous forme de fonction fléchée qui accepte des props.
+
+```mdx snippets/endpoint-note.mdx
+export const EndpointNote = ({ method, path }) => (
+  <Note>
+    This guide covers the <code>{method} {path}</code> endpoint.
+    See the <a href="/api-reference/introduction">API reference</a> for full details.
+  </Note>
+);
+```
+
+* Utilisez la syntaxe des fonctions fléchées (`const Foo = () => ...`).
+* Le mot-clé `function` n'est pas pris en charge dans les fichiers d'extraits.
+* La syntaxe MDX ne se compile pas à l'intérieur des corps de fonctions fléchées. Utilisez-y des balises HTML simples, ou utilisez plutôt un export par défaut.
+
+Passez les props lorsque vous l'utilisez :
+
+```mdx your-page.mdx
+import { EndpointNote } from '/snippets/endpoint-note.mdx';
+
+<EndpointNote method="POST" path="/v1/users" />
+```
+
+## Extraits important d'autres extraits
+
+Les extraits peuvent importer d'autres extraits, ce qui est utile pour composer de grandes sections partagées à partir de petits morceaux.
+
+```mdx snippets/auth-intro.mdx
+import AuthNote from '/snippets/auth-note.mdx';
+
+## Authentication
+
+All endpoints require a bearer token.
+
+<AuthNote />
+```

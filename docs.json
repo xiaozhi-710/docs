@@ -1,0 +1,221 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Mintlify Starter Kit",
+  "colors": {
+    "primary": "#2128e4",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "languages": [
+      {
+        "language": "en",
+        "default": true,
+        "tabs": [
+          {
+            "tab": "Guides",
+            "groups": [
+              {
+                "group": "Getting started",
+                "pages": [
+                  "writing-content/settingssssss",
+                  "quickstart",
+                  "development",
+                  "today-progress",
+                  "file",
+                  {
+                    "group": "rootGroup",
+                    "icon": "100",
+                    "pages": [
+                      "untitled-page",
+                      "untitled-page-2"
+                    ]
+                  },
+                  "untitled-page-3",
+                  "agent/zzz",
+                  "notion-test"
+                ],
+                "root": "index"
+              },
+              {
+                "group": "Customization",
+                "pages": [
+                  "quickstart",
+                  "essentials/navigation",
+                  "essentials/untitled-page"
+                ]
+              },
+              {
+                "group": "Writing content",
+                "pages": [
+                  "essentials/markdown",
+                  "essentials/images",
+                  "essentials/components",
+                  "essentials/reusable-snippets"
+                ]
+              },
+              {
+                "group": "Agent ready",
+                "pages": [
+                  "",
+                  "agent/visibility",
+                  "agent/contextual",
+                  "ai-tools/cursor",
+                  "ai-tools/claude-code",
+                  "ai-tools/windsurf"
+                ]
+              }
+            ],
+            "pages": [
+              "untitled-page-4",
+              "fr/essentials/navigation"
+            ]
+          },
+          {
+            "tab": "API reference",
+            "groups": [
+              {
+                "group": "API documentation",
+                "pages": [
+                  "api-reference/introduction",
+                  {
+                    "group": "test",
+                    "pages": [
+                      "hello",
+                      "autopilot-test/products"
+                    ]
+                  },
+                  "untitled-page-4"
+                ]
+              },
+              {
+                "group": "Endpoint examples",
+                "pages": [
+                  "api-reference/endpoint/get",
+                  "api-reference/endpoint/create",
+                  "api-reference/endpoint/delete",
+                  "api-reference/endpoint/webhook"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "fr",
+        "tabs": [
+          {
+            "tab": "Guides",
+            "groups": [
+              {
+                "group": "Démarrage",
+                "pages": [
+                  "fr/index",
+                  "fr/quickstart",
+                  "fr/development",
+                  "fr/today-progress"
+                ]
+              },
+              {
+                "group": "Personnalisation",
+                "pages": [
+                  "fr/essentials/settings",
+                  "fr/essentials/navigation"
+                ]
+              },
+              {
+                "group": "Rédaction de contenu",
+                "pages": [
+                  "fr/essentials/markdown",
+                  "fr/essentials/code",
+                  "fr/essentials/images",
+                  "fr/essentials/components",
+                  "fr/essentials/reusable-snippets"
+                ]
+              },
+              {
+                "group": "Prêt pour les agents",
+                "pages": [
+                  "fr/agent-ready/prompt",
+                  "fr/agent-ready/visibility",
+                  "fr/agent-ready/contextual",
+                  "fr/ai-tools/cursor",
+                  "fr/ai-tools/claude-code",
+                  "fr/ai-tools/windsurf"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Référence API",
+            "groups": [
+              {
+                "group": "Documentation de l'API",
+                "pages": [
+                  "fr/api-reference/introduction"
+                ]
+              },
+              {
+                "group": "Exemples de points de terminaison",
+                "pages": [
+                  "fr/api-reference/endpoint/get",
+                  "fr/api-reference/endpoint/create",
+                  "fr/api-reference/endpoint/delete",
+                  "fr/api-reference/endpoint/webhook"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "href": "https://mintlify.com/docs",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://mintlify.com/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@mintlify.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://dashboard.mintlify.com"
+    }
+  },
+  "contextual": {
+    "options": [
+     "copy",
+     "view",
+     "chatgpt",
+     "claude",
+     "perplexity",
+     "mcp",
+     "cursor",
+     "vscode"
+   ]
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
+  }
+}

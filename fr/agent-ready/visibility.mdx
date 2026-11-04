@@ -1,0 +1,85 @@
+---
+title: 'Visibility'
+description: 'Affichez un contenu différent aux humains et aux agents IA'
+icon: 'eye'
+---
+
+Le composant `Visibility` permet à une seule page de servir deux audiences : les humains qui lisent sur le web et les agents IA qui traitent la sortie Markdown. Le contenu marqué `for="humans"` apparaît sur la page rendue mais est exclu des exports Markdown. Le contenu marqué `for="agents"` est masqué sur le web mais inclus dans le Markdown.
+
+Cela signifie que vous pouvez écrire des instructions conversationnelles et centrées sur l'interface pour les humains, et des instructions structurées et lisibles par machine pour l'IA — sans maintenir deux pages séparées.
+
+## Fonctionnement
+
+Mintlify sert chaque page à deux URL :
+
+- `https://docs.example.com/page` — le site rendu, pour les humains
+- `https://docs.example.com/page.md` — le Markdown brut, pour les agents IA
+
+`Visibility` contrôle ce qui apparaît à chaque URL.
+
+## Exemple
+
+```mdx
+<Visibility for="humans">
+  <Steps>
+    <Step title="Open the dashboard">
+      Navigate to [dashboard.example.com](https://dashboard.example.com) and sign in.
+    </Step>
+    <Step title="Create an API key">
+      Go to **Settings → API Keys** and click **New key**.
+    </Step>
+  </Steps>
+</Visibility>
+
+<Visibility for="agents">
+  To authenticate, send a POST request to `/v1/auth/token` with the user's
+  email and password in the request body. The response includes a bearer token
+  valid for 24 hours. Pass this token as `Authorization: Bearer <token>` on
+  all subsequent requests.
+</Visibility>
+```
+
+Les lecteurs humains voient la présentation pas à pas de l'interface. Les agents IA qui traitent le Markdown obtiennent à la place les instructions API directes.
+
+## Props
+
+<ResponseField name="for" type='"humans" | "agents"' required>
+  - `"humans"` — visible sur la page web rendue, exclu de l'export `.md`
+  - `"agents"` — masqué sur la page web rendue, inclus dans l'export `.md`
+</ResponseField>
+
+## Quand l'utiliser
+
+<Columns cols={2}>
+  <Card title="Parcours d'intégration" icon="person-walking-arrow-right">
+    Montrez aux humains des captures d'écran de l'interface et des clics sur des boutons. Donnez aux agents les appels API équivalents.
+  </Card>
+  <Card title="Guides de configuration" icon="sliders">
+    Montrez aux humains un panneau de paramètres visuel. Donnez aux agents les indicateurs JSON ou CLI équivalents.
+  </Card>
+  <Card title="Messages d'erreur" icon="triangle-exclamation">
+    Montrez aux humains une explication conviviale. Donnez aux agents des codes d'erreur structurés et des étapes de résolution.
+  </Card>
+  <Card title="Pages conceptuelles" icon="lightbulb">
+    Incluez des diagrammes riches et un récit pour les humains. Fournissez un résumé structuré et concis pour les agents.
+  </Card>
+</Columns>
+
+## Combinaison avec Prompt
+
+`Visibility` et `Prompt` se complètent bien. Utilisez `Visibility` pour donner aux agents un contexte structuré, puis utilisez `Prompt` pour donner aux lecteurs humains une invite qu'ils peuvent utiliser pour poser des questions à une IA sur ce même contenu.
+
+```mdx
+<Visibility for="agents">
+  ## Authentication schema
+  - Method: Bearer token
+  - Header: `Authorization: Bearer <token>`
+  - Token TTL: 86400 seconds
+  - Refresh endpoint: POST /v1/auth/refresh
+</Visibility>
+
+<Prompt description="Ask about authentication" icon="lock">
+  Explain how authentication works in this API and show me example code for
+  getting a token and making an authenticated request.
+</Prompt>
+```

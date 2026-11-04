@@ -1,0 +1,94 @@
+---
+title: "Qoder CLI 如何完成任务"
+---
+
+<div id="overview">
+  ## 概述
+</div>
+
+理解 Qoder CLI 的工作方式，能帮助你更好地预测它的行为、写出更有效的提示词，并在需要时正确地控制和纠正它。
+
+Qoder CLI 的核心是一个 **Agent**：它接收你的请求，理解意图，规划步骤，调用工具与你的项目和环境交互，并根据每一步的结果不断调整策略，直到完成任务。整个过程围绕四个要素协同运行——Agent、工具、权限和上下文。
+
+<div id="agent-loop">
+  ## Agent 主循环
+</div>
+
+### h3
+
+# h1
+
+ceshi
+
+<div>
+  <h2>htmlh2test</h2>
+</div>
+
+ddddd
+
+Qoder CLI 处理一个请求时，大致经历这样一个循环：
+
+1. **接收请求**：读取你的输入，结合当前上下文（对话历史、项目说明、记忆）理解你想达成什么。
+2. **规划下一步**：模型决定下一步应该做什么——是先读文件了解现状，还是搜索代码，还是直接修改，或是运行命令验证。
+3. **调用工具**：Agent 通过工具执行具体动作，例如读取文件、编辑代码、执行 Shell 命令、搜索代码或检索网页。
+4. **观察结果**：把工具返回的结果重新纳入上下文。
+5. **继续或结束**：根据结果判断任务是否完成。没完成就回到第 2 步继续规划下一步；完成则给出总结。
+
+这个循环会重复多轮，直到任务完成、达到轮数上限，或你主动中断。正因为是循环而非一次性生成，Qoder 才能够处理需要多步骤、跨文件、边执行边验证的复杂任务。
+
+> 你可以用 `--max-turns` 限制单次运行的最大对话轮数，避免在自动化场景中无限循环。
+
+<div id="tools">
+  ## 工具
+</div>
+
+Agent 本身只负责思考和决策，所有对外部世界的实际操作都通过**工具**完成。Qoder CLI 内置了一组常用工具：
+
+- **文件类**：读取、写入、编辑文件，浏览目录。
+- **执行类**：运行 Shell 命令。
+- **搜索类**：按内容搜索代码（Grep）、按文件名查找（Glob）。
+- **信息类**：Web 搜索、网页抓取。
+
+{/* NOTE: The following links (MCP, Skills, Subagents, 内置工具) previously pointed to /zh/cli/mcp-servers, /zh/cli/Skills, /zh/cli/subagent, and /zh/cli/tools. Those pages do not exist in this repo, so the references have been unlinked. Restore the links once the target pages are added. */}
+
+除内置工具外，你还可以通过 **MCP** 接入外部工具，通过 **Skills** 和 **Subagents** 扩展 Agent 的能力。工具的完整清单、用途和限制见 **内置工具**。
+
+<div id="permissions">
+  ## 权限
+</div>
+
+工具调用可能带来副作用——修改文件、运行命令、访问网络。为了让你始终掌握控制权，Qoder 在**每次工具调用前**都会做一次权限检查，结果只有三种：
+
+- **allow**：立即执行工具。
+- **ask**：需要确认后才执行。
+- **deny**：阻止这次调用。
+
+权限的具体行为由**权限模式**决定。例如默认模式下，安全的读取操作会自动执行，而敏感操作会请求确认；而在更自动化的模式下，更多操作会被自动放行。
+
+不同运行环境对 `ask` 的处理方式不同：交互式终端会弹窗让你确认，非交互（Headless）模式会把 `ask` 转为拒绝，SDK 和 IDE 集成会把决策交给宿主程序。
+
+{/* NOTE: The "权限" link previously pointed to /zh/cli/permissions, which does not exist in this repo. Restore the link once the target page is added. */}
+
+权限模式、规则配置和目录信任的完整说明见 **权限**。
+
+<div id="context">
+  ## 上下文
+</div>
+
+Qoder 每次会话都会重新构造上下文。它做决策时依赖的背景信息主要来自三个层面：
+
+- **对话上下文**：当前会话中的历史消息、工具调用和结果。随着对话进行，上下文会不断累积。
+- **项目说明**：`AGENTS.md`、rules 等由你或团队维护的静态记忆，描述项目结构、开发规范和协作约定。
+- **长期记忆**：跨会话保留的信息，包括团队约定和可选的自动记忆。
+
+{/* NOTE: The "Qoder CLI 如何记住信息" link previously pointed to /zh/cli/context, which does not exist in this repo. Restore the link once the target page is added. */}
+
+上下文窗口是有限的。当对话很长时，Qoder 会通过压缩（Compact）等机制管理上下文。三者之间的区别和协作方式见 **Qoder CLI 如何记住信息**。
+
+<div id="work-modes">
+  ## 不同的工作方式
+</div>
+
+{/* NOTE: The "选择合适的工作方式" link previously pointed to /zh/cli/work-modes, which does not exist in this repo. Restore the link once the target page is added. */}
+
+上面描述的是最基础的交互式循环。针对不同任务，Qoder CLI 还提供多种工作方式：先规划再执行的 Plan、持续达成目标的 Goal、定时任务、按间隔重复的 /loop、多 Agent 协作的 Workflow，以及适合脚本的 Headless 模式。如何选择，见 **选择合适的工作方式**。

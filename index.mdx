@@ -1,0 +1,41 @@
+---
+title: "Introduction"
+description: "Welcome to the new home for your documentation."
+icon: "star"
+hidden: true
+---
+
+<Warning>
+  ## Errrrr!
+</Warning>
+
+特殊隐藏文档
+
+<Steps>
+  <Step title="Step 1">
+    Description
+  </Step>
+  <Step title="Step 2">
+    Description
+  </Step>
+</Steps>
+
+<Badge color="orange" icon="a" iconType="solid">Label</Badge>
+
+| <h2>11212</h2> | <h2>222</h2> |  |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+
+## 为什么触发限流？
+
+根据错误信息判断触发了哪类限流：
+
+- `Requests rate limit exceeded` 或 `You exceeded your current requests list`：触发了每分钟请求数（RPM）限流。
+- `Allocated quota exceeded` 或 `You exceeded your current quota`：触发了每分钟 Token 消耗（TPM）限流。
+- `Request rate increased too quickly`：请求频率在短时间内激增，触发了系统稳定性保护，即使总调用量未达到 RPM 或 TPM 上限也会触发。
+- 其他报错，参见错误码确认原因。
+
+<Note>
+  除 RPM 和 TPM 外，限流策略可能按秒级 RPS（RPM/60）与 TPS（TPM/60）执行。即使每分钟总调用量未超限，短时间内的请求爆发也可能触发限流。
+</Note>
