@@ -3,6 +3,20 @@ title: "Changelog"
 description: "New features, updates, and fixes."
 ---
 
+<Update label="November 13, 2026">
+
+## New features
+
+- **Filter products by status**: `GET /products` accepts a `status` parameter (`active`, `draft` or `archived`) and returns only products in that state. See the [products API](/autopilot-test/products).
+- **Sort products**: Use the `sort` parameter to order results by price (`price_asc`, `price_desc`) or by name (`name_asc`).
+- **Limit results**: Use the `limit` parameter to return at most 1 to 200 products. The API filters first, then sorts, then applies the limit.
+
+## Updates
+
+- Invalid or repeated values for `status`, `sort` or `limit` return `400` with `invalid_query` and an explanatory `message`.
+
+</Update>
+
 <Update label="October 30, 2026">
 
 No product releases shipped this week. Documentation-only updates were published, including typo fixes on the French [navigation](/fr/essentials/navigation) page. See the [documentation](/index) for the latest content.
